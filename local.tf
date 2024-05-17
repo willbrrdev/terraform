@@ -9,6 +9,16 @@ resource "local_file" "exemplo" {
   #   filename = "example.txt"
 }
 
+data "local_file" "content_exemplo" {
+  filename = local_file.exemplo.filename
+
+}
+
+output "data_source_content" {
+  value = data.local_file.content_exemplo.content_base64
+  
+}
+
 variable "content" {
   type    = string
   default = "Hello Terraform 2"
