@@ -53,4 +53,9 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids         = aws_subnet.subnets[*].id
     security_group_ids = [aws_security_group.sg.id]
   }
+  depends_on = [
+    aws_cloudwatch_log_group.log,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
+  ]
 }
