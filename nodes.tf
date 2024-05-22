@@ -47,3 +47,21 @@ resource "aws_eks_node_group" "node_group" {
     aws_iam_role_policy_attachment.node-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
+
+resource "aws_eks_node_group" "node_group-2" {
+  cluster_name    = aws_eks_cluster.cluster.name
+  node_group_name = "${var.prefix}-${var.cluster_name}-ng-2"
+  node_role_arn   = aws_iam_role.node.arn
+  subnet_ids      = aws_subnet.subnets[*].id
+  instance_types  = ["t3.micro"]
+  scaling_config {
+    desired_size = var.desired_capacity
+    max_size     = var.max_size
+    min_size     = var.min_size
+  }
+  depends_on = [
+    aws_iam_role_policy_attachment.node-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.node-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.node-AmazonEC2ContainerRegistryReadOnly,
+  ]
+}
