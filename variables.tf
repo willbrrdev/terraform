@@ -1,4 +1,5 @@
 variable "prefix" {}
+variable "vpc_cidr_block" {}
 variable "cluster_name" {}
 variable "rentention_days" {}
 variable "desired_capacity" {}
